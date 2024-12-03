@@ -96,7 +96,26 @@ class SudokuGenerator:
 	Return: boolean
     '''
     def is_valid(self, row, col, num):
-        pass
+            #row
+    for i in range(self.row_length):
+        if self.board[row][i] == num:
+            return False
+
+    #column
+    for i in range(self.row_length):
+        if self.board[i][col] == num:
+            return False
+
+    #3x3
+    row_start = row - row % 3
+    col_start = col - col % 3
+
+    for i in range(3):
+        for j in range(3):
+            if self.board[row_start + i][col_start + j] == num:
+                return False
+
+    return True
 
     '''
     Fills the specified 3x3 box with values
@@ -109,7 +128,13 @@ class SudokuGenerator:
 	Return: None
     '''
     def fill_box(self, row_start, col_start):
-        pass
+         unused_in_box = list(range(1,10))
+
+    for i in range(3):
+        for j in range(3):
+            num = random.choice(unused_in_box)
+            self.board[row_start + i][col_start + j] = num
+            unused_in_box.remove(num)
     
     '''
     Fills the three boxes along the main diagonal of the board
@@ -119,7 +144,9 @@ class SudokuGenerator:
 	Return: None
     '''
     def fill_diagonal(self):
-        pass
+        def fill_diagonal(self):
+    for i in range(0, self.row_length, 3):
+        self.fill_box(i, i)
 
     '''
     DO NOT CHANGE
@@ -185,7 +212,13 @@ class SudokuGenerator:
 	Return: None
     '''
     def remove_cells(self):
-        pass
+        removed = 0
+    while removed < self.removed_cells:
+        row = random.randint(0, 8)
+        col = random.randint(0, 8)
+        if self.board[row][col] != 0:
+            self.board[row][col] = 0
+            removed += 1
 
 '''
 DO NOT CHANGE
